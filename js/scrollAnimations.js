@@ -1,18 +1,29 @@
-  document.addEventListener("DOMContentLoaded", () => {
+// /js/scrollAnimations.js
+document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll("section");
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          // Pour ne pas relancer l'animation à chaque fois :
+  
+    const revealOnScroll = () => {
+      const triggerBottom = window.innerHeight * 0.8;
+  
+      sections.forEach((section) => {
+        const boxTop = section.getBoundingClientRect().top;
+  
+        if (boxTop < triggerBottom && !section.classList.contains("visible")) {
+          // 1️⃣ Montre la section
+          section.classList.add("visible");
+  
+          // 2️⃣ Fait apparaître les enfants avec délai progressif
+          const fadeChildren = section.querySelectorAll(".fade-child");
+          fadeChildren.forEach((child, index) => {
+            setTimeout(() => {
+              child.classList.add("visible");
+            }, index * 150); // délai de 150ms entre chaque élément
+          });
         }
       });
-    }, {
-      threshold: 0.2 // le pourcentage de la section visible avant déclenchement
-    });
-
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
+    };
+  
+    window.addEventListener("scroll", revealOnScroll);
+    revealOnScroll();
   });
+  

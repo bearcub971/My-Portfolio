@@ -385,16 +385,34 @@ header li {
   background: #e05500;
 }
 
+/* === ANIMATIONS SCROLL ASYNCHRONES === */
+
+/* 1️⃣ État initial de toutes les sections */
 section {
   opacity: 0;
-  transform: translateY(1px);
-  transition: all 1.5s ease-out;
+  transform: translateY(1PX);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
+/* 2️⃣ Quand une section devient visible */
 section.visible {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* 3️⃣ Éléments internes avec décalage */
+section .fade-child {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 3s ease-out, transform 3s ease-out;
+}
+
+/* 4️⃣ Quand la section est visible, les enfants apparaissent progressivement */
+section.visible .fade-child {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 
 /* ====== FOOTER ====== */
 .footer {
